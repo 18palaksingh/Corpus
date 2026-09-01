@@ -1,0 +1,463 @@
+{
+  "generatedAt": "2026-08-28T06:40:00.000Z",
+  "period": {
+    "start": "2026-08-01",
+    "label": "August 2026"
+  },
+  "user": {
+    "name": "Ananya Rao",
+    "city": "Bengaluru",
+    "dependents": 2,
+    "subtitle": "Bengaluru · Salaried · 2 dependents"
+  },
+  "sync": {
+    "lastRunAt": "2026-08-28T06:40:00Z",
+    "accounts": 4,
+    "cards": 2,
+    "holdings": 6,
+    "summary": "4 accounts, 2 cards and 6 holdings in sync."
+  },
+  "score": {
+    "value": 78,
+    "segmentsFilled": 3,
+    "totalSegments": 4,
+    "summary": "Strong. You are on track for two of three goals. This month's plan closes the third."
+  },
+  "cashflow": {
+    "totalIncome": 214000,
+    "fixedCommitments": 86500,
+    "variableSpend": 75100,
+    "surplus": 52400,
+    "surplusVsAverage": 6100
+  },
+  "portfolio": {
+    "totalValue": 1840000,
+    "xirr": 0.118,
+    "xirrSince": "2022-03-01",
+    "segments": [
+      {
+        "assetClass": "equity",
+        "weight": 0.54,
+        "label": "Equity 54%"
+      },
+      {
+        "assetClass": "debt",
+        "weight": 0.21,
+        "label": "Debt 21%"
+      },
+      {
+        "assetClass": "gold",
+        "weight": 0.15,
+        "label": "Gold 15%"
+      },
+      {
+        "assetClass": "cash",
+        "weight": 0.1,
+        "label": "Cash 10%"
+      }
+    ]
+  },
+  "plan": {
+    "investable": 38000,
+    "buffer": 14400,
+    "actions": [
+      {
+        "kind": "invest",
+        "stepLabel": "01 · INVEST",
+        "amount": 22000,
+        "title": "Broad-market index SIP",
+        "detailTitle": "Broad-market index fund",
+        "caption": "Monthly SIP, 3rd of the month",
+        "reason": "Raises your equity SIP to the level the retirement goal needs. Step up again in April."
+      },
+      {
+        "kind": "prepay",
+        "stepLabel": "02 · PREPAY",
+        "amount": 9000,
+        "title": "Car loan principal",
+        "detailTitle": "Car loan prepayment",
+        "caption": "9.4% · principal only",
+        "reason": "At 9.4% this beats any debt fund you hold. Clears the loan 18 months early."
+      },
+      {
+        "kind": "park",
+        "stepLabel": "03 · PARK",
+        "amount": 7000,
+        "title": "Liquid fund",
+        "detailTitle": "Liquid fund",
+        "caption": "Emergency cover top-up",
+        "reason": "Emergency cover sits at 4.1 months. Six is the target before more equity."
+      }
+    ],
+    "scheduledFor": "2026-09-02T00:00:00.000Z",
+    "footerNote": "Approve once and Corpus schedules all three for 2 September.",
+    "twelveMonthOutlook": "Corpus score moves 78 to 86. The retirement goal returns to on-track. The car loan closes in Apr 2029.",
+    "projectedScore": 86
+  },
+  "alerts": [
+    {
+      "id": "card-utilisation-aurum",
+      "severity": "urgent",
+      "title": "Card utilisation at 62%",
+      "body": "Pay ₹18,000 on the Aurum card before 4 September to keep your score band.",
+      "linkTo": "profile"
+    },
+    {
+      "id": "overspend-groceries",
+      "severity": "advisory",
+      "title": "Groceries 18% over limit",
+      "body": "Four small top-up runs replaced one weekly order. See Where to spend.",
+      "linkTo": "spend"
+    },
+    {
+      "id": "holding-largecap-b",
+      "severity": "advisory",
+      "title": "Two SIPs hold the same stocks",
+      "body": "71% overlap between your large-cap funds. Corpus suggests consolidating.",
+      "linkTo": "plan"
+    },
+    {
+      "id": "section-80c",
+      "severity": "opportunity",
+      "title": "₹46,000 of 80C left",
+      "body": "Seven months to fill it without a March scramble.",
+      "linkTo": "plan"
+    }
+  ],
+  "goals": [
+    {
+      "id": "emergency",
+      "label": "Emergency fund",
+      "progress": 0.6833333333333333,
+      "fill": 0.6833333333333333,
+      "rightValue": "68%",
+      "onTrack": true,
+      "caption": "₹8.2L of ₹12L · complete by Jun 2027"
+    },
+    {
+      "id": "home",
+      "label": "Home down payment",
+      "progress": 0.31,
+      "fill": 0.31,
+      "rightValue": "31%",
+      "onTrack": true,
+      "caption": "₹9.3L of ₹30L · on track for 2030"
+    },
+    {
+      "id": "retirement",
+      "label": "Retirement at 58",
+      "progress": 0.22,
+      "fill": 0.22,
+      "rightValue": "Behind",
+      "onTrack": false,
+      "caption": "Needs ₹22,000 a month more · the plan starts it"
+    }
+  ],
+  "allocation": [
+    {
+      "assetClass": "equity",
+      "label": "Equity",
+      "current": 0.54,
+      "target": 0.62,
+      "shiftLabel": "54% → 62%"
+    },
+    {
+      "assetClass": "debt",
+      "label": "Debt",
+      "current": 0.21,
+      "target": 0.2,
+      "shiftLabel": "21% → 20%"
+    },
+    {
+      "assetClass": "gold",
+      "label": "Gold",
+      "current": 0.15,
+      "target": 0.1,
+      "shiftLabel": "15% → 10%"
+    },
+    {
+      "assetClass": "cash",
+      "label": "Cash and liquid",
+      "current": 0.1,
+      "target": 0.08,
+      "shiftLabel": "10% → 8%"
+    }
+  ],
+  "allocationNote": "Corpus moves you gradually. Nothing is sold to reach the target; new money does the work over the next 18 months.",
+  "holdings": [
+    {
+      "id": "largecap-a",
+      "name": "Large-cap fund A",
+      "value": 410000,
+      "action": "Keep",
+      "actionKind": "keep",
+      "why": "Lowest cost of the two, better tracking"
+    },
+    {
+      "id": "largecap-b",
+      "name": "Large-cap fund B",
+      "value": 270000,
+      "action": "Stop SIP",
+      "actionKind": "stop-sip",
+      "why": "71% overlap with fund A. Hold the units, redirect the SIP"
+    },
+    {
+      "id": "sgb",
+      "name": "Sovereign gold bonds",
+      "value": 280000,
+      "action": "Hold, don't add",
+      "actionKind": "hold",
+      "why": "Above target weight. Let equity dilute it"
+    },
+    {
+      "id": "endowment",
+      "name": "Endowment policy",
+      "value": 140000,
+      "action": "Review",
+      "actionKind": "review",
+      "why": "Returns near 4.6%. Term cover plus an index fund does more"
+    },
+    {
+      "id": "epf",
+      "name": "EPF",
+      "value": 600000,
+      "action": "Keep",
+      "actionKind": "keep",
+      "why": "Counts as your debt allocation"
+    }
+  ],
+  "limits": {
+    "withinLimit": 5,
+    "totalCategories": 7,
+    "reclaimablePerMonth": 9400,
+    "rows": [
+      {
+        "id": "rent",
+        "label": "Rent",
+        "spent": 46000,
+        "limit": 53500,
+        "usage": 0.8598130841121495,
+        "fill": 0.8598130841121495,
+        "status": "under",
+        "usageLabel": "86%",
+        "note": "Comfortable. Hold this even if your salary rises."
+      },
+      {
+        "id": "groceries",
+        "label": "Groceries",
+        "spent": 17700,
+        "limit": 15000,
+        "usage": 1.18,
+        "fill": 1,
+        "status": "over",
+        "usageLabel": "118%",
+        "note": "Nine orders this month. One weekly bulk run saves ₹2,300."
+      },
+      {
+        "id": "eating-out",
+        "label": "Eating out and delivery",
+        "spent": 11200,
+        "limit": 8000,
+        "usage": 1.4,
+        "fill": 1,
+        "status": "over",
+        "usageLabel": "140%",
+        "note": "Weekday lunches are 61% of it. Capping them at three saves ₹3,100."
+      },
+      {
+        "id": "travel",
+        "label": "Travel and commute",
+        "spent": 9800,
+        "limit": 12000,
+        "usage": 0.8166666666666667,
+        "fill": 0.8166666666666667,
+        "status": "under",
+        "usageLabel": "82%",
+        "note": "Room for the October trip if you book by 12 September."
+      },
+      {
+        "id": "utilities",
+        "label": "Utilities and bills",
+        "spent": 6400,
+        "limit": 7000,
+        "usage": 0.9142857142857143,
+        "fill": 0.9142857142857143,
+        "status": "under",
+        "usageLabel": "91%",
+        "note": "Two streaming plans overlap. ₹640 a month."
+      },
+      {
+        "id": "shopping",
+        "label": "Shopping",
+        "spent": 5600,
+        "limit": 9000,
+        "usage": 0.6222222222222222,
+        "fill": 0.6222222222222222,
+        "status": "under",
+        "usageLabel": "62%",
+        "note": "Under limit two months running. Corpus lowered it by ₹1,000."
+      },
+      {
+        "id": "household",
+        "label": "Household help and care",
+        "spent": 8400,
+        "limit": 8500,
+        "usage": 0.9882352941176471,
+        "fill": 0.9882352941176471,
+        "status": "at",
+        "usageLabel": "99%",
+        "note": "Fixed cost. Corpus treats it as a commitment, not discretionary."
+      }
+    ],
+    "highlights": [
+      {
+        "label": "RENT CEILING",
+        "value": "₹53,500",
+        "copy": "The most you can pay in Bengaluru without slowing the home goal. Renewal is due in February."
+      },
+      {
+        "label": "TRAVEL BUDGET, 2026",
+        "value": "₹84,000",
+        "copy": "₹31,000 unspent. Enough for the October trip at shoulder-season fares."
+      },
+      {
+        "label": "IF YOU HIT EVERY LIMIT",
+        "value": "+₹9,400/mo",
+        "accent": true,
+        "copy": "Corpus routes it to the retirement gap automatically."
+      }
+    ]
+  },
+  "spend": {
+    "groups": [
+      {
+        "id": "groceries",
+        "title": "Groceries",
+        "stat": "SAVE ₹2,300/MO",
+        "items": [
+          {
+            "kind": "best",
+            "title": "Freshcart bulk, weekly slot",
+            "body": "Your staples are 9% cheaper in 5kg sizes. One Sunday delivery instead of nine top-ups. Pay with the Blue Metro card for 5% back."
+          },
+          {
+            "kind": "also",
+            "title": "Jayanagar wholesale market",
+            "body": "Produce and pulses at roughly two-thirds of app prices. Worth one trip a month."
+          },
+          {
+            "kind": "avoid",
+            "title": "Ten-minute delivery apps",
+            "body": "₹4,100 of your groceries came through these last month, at a 22% premium."
+          }
+        ]
+      },
+      {
+        "id": "travel",
+        "title": "Travel",
+        "stat": "₹31,000 LEFT THIS YEAR",
+        "items": [
+          {
+            "kind": "best",
+            "title": "Coorg, 9 to 13 October",
+            "body": "Drive-distance, shoulder season, no flights. Fits the remaining budget with ₹8,000 spare. Book by 12 September."
+          },
+          {
+            "kind": "also",
+            "title": "Pondicherry, 22 to 26 November",
+            "body": "Overnight train, ₹18,400 all in. Leaves room for a December trip too."
+          },
+          {
+            "kind": "card",
+            "title": "Book on the Aurum card",
+            "body": "10x points on travel, and the statement date gives you 47 days to pay."
+          }
+        ]
+      }
+    ],
+    "routing": [
+      {
+        "label": "GROCERIES AND BILLS",
+        "name": "Blue Metro",
+        "body": "5% back, capped at ₹500 a month. You hit the cap by the 19th."
+      },
+      {
+        "label": "TRAVEL AND DINING",
+        "name": "Aurum",
+        "body": "10x points, worth ₹1,900 last year and mostly unredeemed."
+      },
+      {
+        "label": "RENT AND FEES",
+        "name": "Bank transfer",
+        "body": "Card rent payments cost 1.8% in fees. Never worth the points."
+      }
+    ],
+    "annualUpside": 41600,
+    "annualUpsideCopy": "From cheaper baskets, correct card routing and redeemed points."
+  },
+  "profile": {
+    "name": "Ananya Rao",
+    "city": "Bengaluru",
+    "dependents": 2,
+    "income": {
+      "monthlyTakeHome": 205000,
+      "rentalIncome": 9000,
+      "freelanceAndOther": 0,
+      "expectedAnnualBonus": 320000,
+      "bonusMonth": 4,
+      "stability": "Salaried, permanent",
+      "taxRegime": "Old regime"
+    },
+    "commitments": [
+      {
+        "id": "rent",
+        "label": "Rent",
+        "monthlyAmount": 46000
+      },
+      {
+        "id": "car-loan",
+        "label": "Car loan EMI, 9.4%",
+        "monthlyAmount": 18600
+      },
+      {
+        "id": "school-fees",
+        "label": "School fees",
+        "monthlyAmount": 13500
+      },
+      {
+        "id": "insurance",
+        "label": "Insurance premiums",
+        "monthlyAmount": 8400
+      }
+    ],
+    "commitmentsTotal": 86500,
+    "cards": [
+      {
+        "id": "aurum",
+        "name": "Aurum",
+        "last4": "4412",
+        "caption": "Limit ₹4,00,000 · statement on the 18th",
+        "utilisation": 0.62,
+        "utilisationLabel": "62% used",
+        "tone": "negative"
+      },
+      {
+        "id": "blue-metro",
+        "name": "Blue Metro",
+        "last4": "9087",
+        "caption": "Limit ₹1,50,000 · statement on the 2nd",
+        "utilisation": 0.19,
+        "utilisationLabel": "19% used",
+        "tone": "positive"
+      }
+    ],
+    "accounts": [
+      {
+        "id": "deposits",
+        "label": "Salary and savings accounts",
+        "caption": "Two banks, refreshed this morning",
+        "status": "Linked"
+      }
+    ]
+  }
+}

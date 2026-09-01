@@ -35,11 +35,23 @@ export function PlanCard({ plan, headerNote }: { plan: MonthlyPlan; headerNote: 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // A recalculation replaces the plan; drop any half-finished edit with it.
+  /*
+   * A recalculation replaces the plan; drop any half-finished edit with it.
+   *
+   * Keyed on the plan's *content*, not the object: every server render hands
+   * down a fresh object, so depending on identity would reset the card on the
+   * refresh that follows an approval — throwing away the scheduled state the
+   * approval just produced.
+   */
+  const planKey = `${plan.scheduledFor}|${plan.investable}|${plan.actions
+    .map((a) => `${a.kind}:${a.amount}`)
+    .join(',')}`;
+
   useEffect(() => {
     setAmounts(plan.actions.map((a) => a.amount));
     setMode('idle');
-  }, [plan]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [planKey]);
 
   const allocated = amounts.reduce((sum, n) => sum + n, 0);
   const remaining = plan.investable - allocated;

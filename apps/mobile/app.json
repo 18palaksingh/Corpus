@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "Corpus",
+    "slug": "corpus",
+    "version": "0.1.0",
+    "scheme": "corpus",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "backgroundColor": "#F4F4F2",
+    "splash": {
+      "backgroundColor": "#14161A",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.corpus.app"
+    },
+    "android": {
+      "package": "com.corpus.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#14161A"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": ["expo-router"],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "//": "Point this at the deployed web app; the mobile client reads /api/snapshot from it.",
+      "apiBaseUrl": "http://localhost:3000"
+    }
+  }
+}
