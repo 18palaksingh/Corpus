@@ -1,0 +1,87 @@
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.stats {
+  display: flex;
+  gap: 32px;
+  flex: 0 0 auto;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/*
+ * These four elements wrap and break apart at narrower widths without
+ * `white-space: nowrap` — the design handoff calls this out explicitly.
+ */
+.statLabel,
+.statValue {
+  white-space: nowrap;
+}
+
+.statValue {
+  font-family: var(--font-mono), monospace;
+  font-size: 23px;
+}
+
+.limitsGrid {
+  grid-template-columns: 1.3fr 0.9fr 0.9fr 1.3fr 1.9fr;
+}
+
+.usage {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.usageTrack {
+  flex: 1;
+}
+
+.usagePct {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+}
+
+.limitMuted {
+  color: var(--color-muted);
+}
+
+/*
+ * Five columns do not survive a narrow viewport. Below the compact breakpoint
+ * each category becomes a two-line block: label and spend on the first line,
+ * the usage bar on the second, then the note.
+ */
+@media (max-width: 1100px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .limitsHeader {
+    display: none;
+  }
+
+  .limitsGrid {
+    grid-template-columns: 1fr auto;
+    gap: 8px 12px;
+    align-items: center;
+  }
+
+  .limitsGrid > :nth-child(3) {
+    display: none;
+  }
+
+  .limitsGrid > :nth-child(4),
+  .limitsGrid > :nth-child(5) {
+    grid-column: 1 / -1;
+  }
+}

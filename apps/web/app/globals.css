@@ -1,0 +1,123 @@
+@import './tokens.css';
+
+/*
+ * Base styles. Everything component-specific lives in a CSS module beside its
+ * component; this file only sets the page, the type defaults and the shared
+ * primitives that would otherwise be repeated in every module.
+ *
+ * No shadows anywhere. Depth comes from 1px borders and the light/dark surface
+ * contrast — see the design handoff.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-page-background);
+}
+
+body {
+  font-family: var(--font-sans), Helvetica, sans-serif;
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-accent-hover);
+  text-decoration: underline;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Focus rings — the design specifies none, but keyboard users need them. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-control);
+}
+
+/*
+ * The mono/sans split is a hard rule: if it is a number or an all-caps
+ * metadata label, it is mono.
+ */
+.mono {
+  font-family: var(--font-mono), monospace;
+}
+
+/* All-caps micro-label — 10px mono, wide tracking, muted. */
+.microLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--color-muted);
+}
+
+.microLabelOnDark {
+  color: var(--color-muted-on-dark);
+}
+
+/* Table header variant uses slightly tighter tracking. */
+.microLabelTable {
+  letter-spacing: 0.12em;
+}
+
+.pageTitle {
+  font-size: 27px;
+  font-weight: 600;
+  letter-spacing: -0.6px;
+  margin: 0;
+}
+
+.pageSubhead {
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--color-muted);
+  text-wrap: pretty;
+  margin: 0;
+}
+
+.cardHeading {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

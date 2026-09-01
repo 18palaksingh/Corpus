@@ -1,0 +1,99 @@
+.card {
+  padding: var(--pad-card);
+  gap: 16px;
+}
+
+.commitments {
+  display: flex;
+  flex-direction: column;
+}
+
+.commitmentRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.commitmentRow:first-child {
+  padding-top: 0;
+}
+
+.commitmentTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding-top: 12px;
+}
+
+.commitmentLabel {
+  font-size: 14px;
+}
+
+.commitmentTotalLabel {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.commitmentValue {
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+}
+
+.commitmentTotalValue {
+  font-family: var(--font-mono), monospace;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.accountRow {
+  border: 1px solid var(--color-border);
+  background: var(--color-white);
+  border-radius: var(--radius-inner-group);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.accountText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.accountTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.accountCaption {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.accountStatus {
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  flex: 0 0 auto;
+}
+
+.footnote {
+  margin-top: auto;
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.5;
+  border-top: 1px solid var(--color-track);
+  padding-top: 14px;
+}

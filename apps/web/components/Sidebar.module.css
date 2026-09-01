@@ -1,0 +1,159 @@
+.sidebar {
+  width: var(--sidebar-width);
+  flex: 0 0 var(--sidebar-width);
+  background: var(--color-ink);
+  color: var(--color-page-background);
+  display: flex;
+  flex-direction: column;
+  padding: var(--sidebar-pad-y) var(--sidebar-pad-x);
+  gap: 28px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 6px;
+  color: inherit;
+}
+
+.logo:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.mark {
+  width: 20px;
+  height: 20px;
+  background: var(--color-accent);
+  border-radius: var(--radius-logo-mark);
+  flex: 0 0 20px;
+}
+
+.wordmark {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.navLabel {
+  color: var(--color-sidebar-tertiary);
+  padding: 0 6px 10px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border: 0;
+  background: transparent;
+  color: var(--color-page-background);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  padding: 9px 10px;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.72;
+  transition: background var(--hover-transition), opacity var(--hover-transition);
+}
+
+.navItem:hover {
+  background: var(--color-sidebar-hover);
+  opacity: 1;
+  text-decoration: none;
+  color: var(--color-page-background);
+}
+
+.navItemActive {
+  opacity: 1;
+}
+
+/* The 3×15px indicator bar leading each item. Accent when active. */
+.indicator {
+  width: 3px;
+  height: 15px;
+  border-radius: 2px;
+  display: block;
+  background: transparent;
+  flex: 0 0 3px;
+}
+
+.indicatorActive {
+  background: var(--color-accent-light);
+}
+
+.footer {
+  margin-top: auto;
+  border-top: 1px solid var(--color-surface-panel-border);
+  padding: 16px 6px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footerLabel {
+  color: var(--color-sidebar-tertiary);
+}
+
+.footerTime {
+  font-size: 13px;
+  color: var(--color-sidebar-secondary);
+}
+
+.footerSummary {
+  font-size: 12px;
+  color: var(--color-sidebar-tertiary);
+  line-height: 1.45;
+}
+
+/*
+ * Below the mobile breakpoint the sidebar stops being a column and becomes a
+ * horizontal bar at the top of the page: the nav scrolls sideways, and the
+ * sync footer moves to the profile screen where there is room for it.
+ */
+@media (max-width: 760px) {
+  .sidebar {
+    width: 100%;
+    flex: none;
+    height: auto;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px var(--sidebar-pad-x);
+  }
+
+  .navGroup {
+    flex-direction: row;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .navGroup::-webkit-scrollbar {
+    display: none;
+  }
+
+  .navLabel,
+  .footer {
+    display: none;
+  }
+
+  .navItem {
+    width: auto;
+    white-space: nowrap;
+    padding: 8px 12px;
+  }
+}

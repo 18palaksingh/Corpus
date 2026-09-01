@@ -1,0 +1,336 @@
+/*
+ * Shared primitives: the card shells, tables, bars and buttons that every
+ * screen builds from. Keeping them here is what makes the five screens read as
+ * one product rather than five separate layouts.
+ */
+
+/* --- Cards --------------------------------------------------------------- */
+
+.card {
+  background: var(--color-card-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.cardDark {
+  background: var(--color-ink);
+  color: var(--color-page-background);
+  border-radius: var(--radius-card);
+  border: 0;
+}
+
+/* Cards whose content is flush to the edge — tables, divided cells. */
+.cardFlush {
+  overflow: hidden;
+}
+
+.cardPadded {
+  padding: var(--pad-card);
+  display: flex;
+  flex-direction: column;
+}
+
+.cardCompact {
+  padding: var(--pad-card-compact);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Header bar inside a flush card. */
+.cardHeader {
+  padding: 19px var(--pad-card);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cardHeaderTight {
+  padding: 19px 22px;
+}
+
+.cardHeaderMeta {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+/* --- Page shell ---------------------------------------------------------- */
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  padding: var(--page-pad-top) var(--page-pad-x) var(--page-pad-bottom);
+  gap: var(--gap-section);
+}
+
+.screenNarrow {
+  max-width: 1060px;
+}
+
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 640px;
+}
+
+.pageHeaderWide {
+  max-width: 620px;
+}
+
+/* --- Grids --------------------------------------------------------------- */
+
+.gridHero {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: var(--gap-card-grid);
+}
+
+.gridSplit {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: var(--gap-card-grid);
+  align-items: start;
+}
+
+.gridHalves {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap-card-grid);
+  align-items: start;
+}
+
+.gridThirds {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-card-grid);
+}
+
+/*
+ * Divided cells: a 1px grid gap over a border-coloured background draws the
+ * dividers, so no cell needs its own border.
+ */
+.cellRow {
+  display: grid;
+  gap: 1px;
+  background: var(--color-border);
+}
+
+/*
+ * Three equal cells, per the handoff. The prototype used `auto-fit` with a
+ * 230px minimum, which silently drops to two columns once the containing
+ * 1.6fr column is narrower than ~700px — which it is at 1440px, the width the
+ * screen is supposed to be read at.
+ */
+.cellRowThree {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.cellRowFour {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.cell {
+  background: var(--color-white);
+  padding: var(--pad-card-inner-cell);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.cellDark {
+  background: var(--color-ink);
+  color: var(--color-page-background);
+  padding: var(--pad-card-inner-cell);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* --- Metrics ------------------------------------------------------------- */
+
+.heroMetric {
+  font-family: var(--font-mono), monospace;
+  font-size: 64px;
+  font-weight: 500;
+  line-height: 0.86;
+  letter-spacing: -2px;
+}
+
+.cardMetric {
+  font-family: var(--font-mono), monospace;
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -1.2px;
+  line-height: 1;
+}
+
+.secondaryMetric {
+  font-family: var(--font-mono), monospace;
+  font-size: 25px;
+}
+
+.planFigure {
+  font-family: var(--font-mono), monospace;
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.8px;
+}
+
+.positive {
+  color: var(--color-positive);
+}
+
+.negative {
+  color: var(--color-negative);
+}
+
+.accentText {
+  color: var(--color-accent);
+}
+
+/* --- Bars ---------------------------------------------------------------- */
+
+.track {
+  background: var(--color-track);
+  border-radius: var(--radius-bar-sm);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: var(--radius-bar-sm);
+}
+
+/* --- Tables -------------------------------------------------------------- */
+
+.tableHeader {
+  display: grid;
+  gap: 18px;
+  padding: var(--pad-table-header, 11px 24px);
+  background: var(--color-subtle-fill);
+  color: var(--color-muted);
+}
+
+.tableRow {
+  display: grid;
+  gap: 18px;
+  padding: 16px var(--pad-card);
+  border-top: 1px solid var(--color-border-light);
+  align-items: center;
+}
+
+.tableRowTall {
+  padding: 17px var(--pad-card);
+}
+
+.tableCellTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.tableCellMono {
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+}
+
+.tableCellNote {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.45;
+}
+
+/* --- Buttons ------------------------------------------------------------- */
+
+.buttonSecondary {
+  border: 1px solid var(--color-input-border);
+  background: var(--color-white);
+  color: var(--color-ink);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition: border-color var(--hover-transition);
+}
+
+.buttonSecondary:hover:not(:disabled) {
+  border-color: var(--color-ink);
+}
+
+.buttonDark {
+  border: 0;
+  background: var(--color-ink);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition: background var(--hover-transition);
+}
+
+.buttonDark:hover:not(:disabled) {
+  background: var(--color-ink-hover);
+}
+
+.buttonSecondary:disabled,
+.buttonDark:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* --- Body copy ----------------------------------------------------------- */
+
+.body {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.bodyOnDark {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-body-on-dark);
+  text-wrap: pretty;
+}
+
+/* --- Responsive ---------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .gridHero,
+  .gridSplit,
+  .gridHalves,
+  .gridThirds {
+    grid-template-columns: 1fr;
+  }
+
+  .cellRowFour {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cellRowThree {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .screen {
+    padding: 22px 18px 44px;
+    gap: 16px;
+  }
+
+  .cellRowFour {
+    grid-template-columns: 1fr;
+  }
+
+  .cardHeader,
+  .cardHeaderTight {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}

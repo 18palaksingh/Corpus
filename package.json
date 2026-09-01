@@ -1,0 +1,21 @@
+{
+  "name": "corpus",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Corpus — personal finance planner for salaried users in India. Web and mobile.",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build:core": "npm run build -w @corpus/core",
+    "dev:web": "npm run build:core && npm run dev -w @corpus/web",
+    "dev:mobile": "npm run build:core && npm run start -w @corpus/mobile",
+    "build": "npm run build:core && npm run build -w @corpus/web",
+    "typecheck": "npm run build:core && npm run typecheck --workspaces --if-present",
+    "test": "npm run build:core && npm run test -w @corpus/core"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

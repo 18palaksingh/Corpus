@@ -1,0 +1,129 @@
+.allocationCard {
+  padding: var(--pad-card);
+  gap: 18px;
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.bar {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.barHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  gap: 12px;
+}
+
+.barName {
+  font-weight: 600;
+}
+
+.barShift {
+  font-family: var(--font-mono), monospace;
+  color: var(--color-muted);
+}
+
+.footnote {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.5;
+  border-top: 1px solid var(--color-track);
+  padding-top: 16px;
+  text-wrap: pretty;
+  margin: 0;
+}
+
+.darkCard {
+  padding: var(--pad-card);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.darkList {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--color-surface-panel-border);
+  border-radius: var(--radius-inner-group);
+  overflow: hidden;
+}
+
+.darkRow {
+  background: var(--color-surface-panel);
+  padding: 15px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.darkRowText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.darkRowTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.darkRowCaption {
+  font-size: 12px;
+  color: var(--color-muted-on-dark);
+}
+
+.darkRowAmount {
+  font-family: var(--font-mono), monospace;
+  font-size: 16px;
+  flex: 0 0 auto;
+}
+
+.darkFooter {
+  margin-top: auto;
+  border-top: 1px solid var(--color-surface-panel-border);
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.holdingsGrid {
+  grid-template-columns: 2fr 1fr 1fr 1.8fr;
+}
+
+.action {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/*
+ * The holdings table is four columns of very different content. Below the
+ * compact breakpoint it becomes a stacked block per holding: name and value on
+ * one line, then the action, then the reason.
+ */
+@media (max-width: 1100px) {
+  .holdingsHeader {
+    display: none;
+  }
+
+  .holdingsGrid {
+    grid-template-columns: 1fr auto;
+    gap: 6px 12px;
+    align-items: baseline;
+  }
+
+  .holdingsGrid > :nth-child(3),
+  .holdingsGrid > :nth-child(4) {
+    grid-column: 1 / -1;
+  }
+}

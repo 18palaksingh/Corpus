@@ -1,0 +1,249 @@
+/* --- Score card ---------------------------------------------------------- */
+
+.scoreCard {
+  padding: var(--pad-card);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.scoreValue {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.scoreOutOf {
+  font-family: var(--font-mono), monospace;
+  font-size: 15px;
+  color: var(--color-muted-on-dark);
+  padding-bottom: 5px;
+}
+
+.scoreSegments {
+  display: flex;
+  gap: 3px;
+}
+
+.segment {
+  height: var(--bar-score);
+  flex: 1;
+  border-radius: 2px;
+  background: #33373f;
+}
+
+.segmentFilled {
+  background: var(--color-accent-light);
+}
+
+/* --- Metric cards -------------------------------------------------------- */
+
+.metricCard {
+  gap: 13px;
+}
+
+.metricDelta {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.breakdown {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.breakdownRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  gap: 12px;
+}
+
+.breakdownLabel {
+  color: var(--color-muted);
+}
+
+.allocation {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.stackedBar {
+  display: flex;
+  height: var(--bar-stacked);
+  border-radius: var(--radius-bar);
+  overflow: hidden;
+  gap: 2px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+/* --- Plan card ----------------------------------------------------------- */
+
+.planFooter {
+  padding: 15px var(--pad-card);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--color-subtle-fill);
+}
+
+.planFooterNote {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.planFooterActions {
+  display: flex;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.stepLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+}
+
+.stepTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Once approved, the plan card reports what is scheduled rather than asking again. */
+.scheduledNote {
+  font-size: 13px;
+  color: var(--color-positive);
+  font-weight: 500;
+}
+
+/* --- Alerts -------------------------------------------------------------- */
+
+.alertsHeading {
+  padding: 19px 22px 13px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.alertRow {
+  padding: 15px 22px;
+  border-top: 1px solid var(--color-border-light);
+  display: flex;
+  gap: 12px;
+  color: inherit;
+}
+
+a.alertRow:hover {
+  background: var(--color-subtle-fill);
+  text-decoration: none;
+  color: inherit;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex: 0 0 6px;
+}
+
+.alertText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.alertTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.alertBody {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.45;
+}
+
+/* --- Goals --------------------------------------------------------------- */
+
+.goalsCard {
+  padding: var(--pad-card);
+  gap: 18px;
+}
+
+.goalsHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.goalsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.goal {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.goalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.goalLabel {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.goalValue {
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.goalValueBehind {
+  color: var(--color-negative);
+}
+
+.goalCaption {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+@media (max-width: 1100px) {
+  .goalsGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 760px) {
+  .planFooter {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .planFooterActions {
+    justify-content: flex-end;
+  }
+}

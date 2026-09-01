@@ -1,0 +1,73 @@
+.recRow {
+  padding: 16px 22px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  border-top: 1px solid var(--color-border-light);
+}
+
+/* The first row of each card is the recommendation, and is tinted to say so. */
+.recRowBest {
+  background: var(--color-accent-tint);
+  border-top: 0;
+}
+
+/*
+ * Fixed width so every title in a card starts at the same x — "AVOID" is wider
+ * than "BEST" and would otherwise nudge its row out of line.
+ */
+.tag {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  padding-top: 3px;
+  flex: 0 0 40px;
+  width: 40px;
+}
+
+.recText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.recTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.recBody {
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--color-muted);
+}
+
+.recBodyBest {
+  color: var(--color-body-dim);
+}
+
+.headerStat {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: var(--color-accent);
+  flex: 0 0 auto;
+}
+
+.routingName {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.routingBody {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.45;
+}
+
+.routingBodyDark {
+  color: var(--color-body-on-dark);
+}
+
+.upside {
+  font-family: var(--font-mono), monospace;
+  font-size: 22px;
+}

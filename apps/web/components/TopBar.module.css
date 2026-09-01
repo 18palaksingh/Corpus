@@ -1,0 +1,83 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: var(--topbar-pad-y) var(--topbar-pad-x);
+  background: var(--color-card-background);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.identity {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  min-width: 0;
+}
+
+.name {
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+/* The period pill is a display control, not a button — there is no month picker yet. */
+.period {
+  border: 1px solid var(--color-border);
+  background: var(--color-white);
+  border-radius: var(--radius-control);
+  padding: 8px 13px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.recalculate {
+  border: 0;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  background: var(--color-accent);
+  white-space: nowrap;
+  transition: background var(--hover-transition);
+}
+
+.recalculate:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+
+.recalculate:disabled {
+  cursor: progress;
+  opacity: 0.72;
+}
+
+@media (max-width: 760px) {
+  .topBar {
+    position: static;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px var(--topbar-pad-x);
+  }
+
+  .subtitle {
+    display: none;
+  }
+}
