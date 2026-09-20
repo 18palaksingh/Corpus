@@ -1,5 +1,13 @@
 # Corpus
 
+> **This repository holds two products.** Corpus is below. **Steady** — a
+> work-first companion that helps professionals catch burnout early — lives in
+> `packages/steady-core`, `apps/steady-web` and `apps/steady-mobile`, and is
+> documented in **[STEADY.md](STEADY.md)**. They share the monorepo and nothing
+> else.
+
+## Corpus
+
 A personal finance planner for salaried users in India. Income, fixed
 commitments, spending, credit cards and existing investments go in; one monthly
 plan comes out — invest this, prepay that, park the rest — alongside
@@ -15,6 +23,9 @@ packages/core     types, design tokens, INR formatting, and the planning model
 apps/web          Next.js (App Router) — the desktop-first web app
 apps/mobile       Expo / React Native — iOS, Android, and Expo web
 ```
+
+Steady's three workspaces (`packages/steady-core`, `apps/steady-web`,
+`apps/steady-mobile`) sit alongside these and are independent of them.
 
 Both clients render the same `Snapshot`. The model runs server-side and neither
 client does financial math of its own, so the score on one screen can never

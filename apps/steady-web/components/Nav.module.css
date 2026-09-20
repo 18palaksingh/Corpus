@@ -1,0 +1,141 @@
+/*
+ * One nav, two shapes.
+ *
+ * Below 900px it is a bottom tab bar, because that is where a thumb is. At and
+ * above 900px it becomes a left sidebar. Same markup, same destinations, same
+ * accent — only the axis changes.
+ */
+
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  background: var(--color-ink);
+  padding: var(--space-sm) var(--space-sm);
+  padding-bottom: calc(var(--space-sm) + env(safe-area-inset-bottom, 0px));
+}
+
+.item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: var(--space-sm) 4px;
+  border-radius: var(--radius-md);
+  color: var(--color-muted-light);
+  text-decoration: none;
+  font-size: var(--text-label);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.item:hover {
+  color: var(--color-white);
+}
+
+.active {
+  color: var(--color-primary-on-dark);
+}
+
+/* The accent indicator: a bar above the label on mobile. */
+.indicator {
+  width: 18px;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+}
+
+.active .indicator {
+  background: var(--color-primary-on-dark);
+}
+
+.brand {
+  display: none;
+}
+
+.footer {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .nav {
+    top: 0;
+    right: auto;
+    bottom: 0;
+    width: 232px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .brand {
+    display: block;
+    padding: 0 var(--space-md) var(--space-xl);
+    color: var(--color-white);
+    font-size: var(--text-title);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .item {
+    flex: 0 0 auto;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: var(--space-md);
+    padding: 10px var(--space-md);
+    text-align: left;
+    font-size: var(--text-caption);
+    letter-spacing: 0.04em;
+  }
+
+  .item:hover {
+    background: var(--color-ink-panel);
+  }
+
+  .indicator {
+    width: 2px;
+    height: 16px;
+  }
+
+  .footer {
+    display: block;
+    margin-top: auto;
+    padding: var(--space-lg) var(--space-md) 0;
+    border-top: 1px solid var(--color-ink-panel);
+  }
+
+  .footerLabel {
+    display: block;
+    color: var(--color-muted-light);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: var(--text-label);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .footerValue {
+    display: block;
+    margin-top: 2px;
+    color: var(--color-white);
+    font-size: var(--text-caption);
+  }
+
+  .footerLink {
+    display: inline-block;
+    margin-top: var(--space-md);
+    color: var(--color-primary-on-dark);
+    font-size: var(--text-caption);
+    text-decoration: none;
+  }
+
+  .footerLink:hover {
+    text-decoration: underline;
+  }
+}

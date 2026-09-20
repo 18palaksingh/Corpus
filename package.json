@@ -2,7 +2,7 @@
   "name": "corpus",
   "private": true,
   "version": "0.1.0",
-  "description": "Corpus — personal finance planner for salaried users in India. Web and mobile.",
+  "description": "Corpus and Steady \u2014 two products, one monorepo. Web and mobile clients for each.",
   "workspaces": [
     "packages/*",
     "apps/*"
@@ -12,8 +12,14 @@
     "dev:web": "npm run build:core && npm run dev -w @corpus/web",
     "dev:mobile": "npm run build:core && npm run start -w @corpus/mobile",
     "build": "npm run build:core && npm run build -w @corpus/web",
-    "typecheck": "npm run build:core && npm run typecheck --workspaces --if-present",
-    "test": "npm run build:core && npm run test -w @corpus/core"
+    "typecheck": "npm run build:core && npm run build:steady-core && npm run typecheck --workspaces --if-present",
+    "test": "npm run build:core && npm run test -w @corpus/core && npm run test:steady",
+    "build:steady-core": "npm run build -w @steady/core",
+    "dev:steady-web": "npm run build:steady-core && npm run dev -w @steady/web",
+    "dev:steady-mobile": "npm run build:steady-core && npm run start -w @steady/mobile",
+    "build:steady": "npm run build:steady-core && npm run build -w @steady/web",
+    "test:steady": "npm run build:steady-core && npm run test -w @steady/core",
+    "e2e:steady": "npm run e2e -w @steady/web"
   },
   "engines": {
     "node": ">=20"

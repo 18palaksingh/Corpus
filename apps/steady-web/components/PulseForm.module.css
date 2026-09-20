@@ -1,0 +1,118 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.progress {
+  display: flex;
+  gap: 6px;
+}
+
+.pip {
+  flex: 1;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--color-border);
+}
+
+.pipDone {
+  background: var(--color-primary);
+}
+
+.question {
+  font-size: var(--text-heading);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+/* The 1–5 scale. Large targets: this is tapped on a phone, often one-handed. */
+.scale {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.scaleButton {
+  flex: 1;
+  aspect-ratio: 1;
+  min-height: 56px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--text-body-large);
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.scaleButton:hover {
+  border-color: var(--color-primary);
+}
+
+.scaleButtonSelected {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.scaleEnds {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-sm);
+}
+
+.scaleEnd {
+  font-size: var(--text-caption);
+  color: var(--color-muted);
+}
+
+/* Yes / no pairs. */
+.choices {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.choice {
+  flex: 1;
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  cursor: pointer;
+}
+
+.choiceSelected {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.sleepRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.sleepValue {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--text-title);
+  min-width: 4ch;
+  text-align: right;
+}
+
+.range {
+  flex: 1;
+  accent-color: var(--color-primary);
+}
+
+.footer {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.done {
+  text-align: center;
+  padding: var(--space-xxl) 0;
+}

@@ -1,0 +1,185 @@
+/* Shared primitives. Every screen is built from these, so a spacing change
+   lands everywhere at once rather than in the one card someone remembered. */
+
+.card {
+  background: var(--color-card-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+}
+
+.cardTight {
+  padding: var(--space-lg);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.stackTight {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.rowBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+.caption {
+  color: var(--color-muted);
+  font-size: var(--text-caption);
+}
+
+/* ------------------------------------------------------------------ Buttons */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 12px var(--space-xl);
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 120ms ease;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.buttonSecondary {
+  background: var(--color-white);
+  color: var(--color-ink);
+  border-color: var(--color-border-strong);
+}
+
+.buttonSecondary:hover:not(:disabled) {
+  background: var(--color-subtle-fill);
+}
+
+.buttonGhost {
+  background: transparent;
+  color: var(--color-muted);
+  border-color: transparent;
+  padding: var(--space-sm) var(--space-md);
+}
+
+.buttonGhost:hover:not(:disabled) {
+  background: var(--color-subtle-fill);
+  color: var(--color-ink);
+}
+
+.buttonFull {
+  width: 100%;
+}
+
+/* A tappable row that acts as a link — the "Suggested for you" pattern. */
+.actionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  width: 100%;
+  padding: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  color: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.actionRow:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-subtle-fill);
+}
+
+.actionRowChevron {
+  color: var(--color-muted-light);
+  flex-shrink: 0;
+}
+
+/* ------------------------------------------------------------------- Fields */
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 12px var(--space-lg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.fieldLabel {
+  display: block;
+  margin-bottom: var(--space-sm);
+  font-weight: 500;
+}
+
+/* -------------------------------------------------------------------- Notes */
+
+/* A quiet, standing disclaimer. Legible, never shouting. */
+.note {
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  background: var(--color-subtle-fill);
+  color: var(--color-muted);
+  font-size: var(--text-caption);
+  line-height: 1.5;
+}
+
+.noteWarn {
+  background: var(--signal-amber-bg);
+  color: var(--signal-amber-fg);
+}
+
+.error {
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  background: var(--signal-red-bg);
+  color: var(--signal-red-fg);
+  font-size: var(--text-caption);
+}
+
+/* -------------------------------------------------------------- Empty state */
+
+.empty {
+  padding: var(--space-xxl) var(--space-xl);
+  text-align: center;
+  color: var(--color-muted);
+}

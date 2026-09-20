@@ -10,3 +10,13 @@ out/
 .env.local
 npm-debug.log*
 yarn-error.log*
+
+# Expo generates these from app.config.js on every build; committing them means
+# resolving merge conflicts in code nobody edits.
+apps/*/android/
+apps/*/ios/
+
+# Local SQLite database and generated screenshots.
+*.db
+*.db-journal
+screenshots/

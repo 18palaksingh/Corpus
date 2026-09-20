@@ -1,0 +1,143 @@
+name: Steady checks
+
+# Everything that can be checked without an Android device.
+#
+# The end-to-end job runs against a real server with a real database, because
+# the seams this product most needs protected — auth, the crisis route, one
+# account not reading another's data — do not exist until those are wired
+# together, and a green unit suite says nothing about them.
+
+on:
+  push:
+    branches: ['claude/**', main]
+    paths:
+      - 'packages/steady-core/**'
+      - 'apps/steady-web/**'
+      - 'apps/steady-mobile/**'
+      - '.github/workflows/steady-checks.yml'
+  pull_request:
+    paths:
+      - 'packages/steady-core/**'
+      - 'apps/steady-web/**'
+      - 'apps/steady-mobile/**'
+
+concurrency:
+  group: steady-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  CHECKPOINT_DISABLE: '1'
+  EXPO_NO_TELEMETRY: '1'
+
+jobs:
+  model:
+    name: Model and types
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+      - name: Build the model
+        run: npm run build:steady-core
+      - name: Model tests
+        run: npm run test -w @steady/core
+      - name: Typecheck every workspace
+        run: npm run typecheck
+        env:
+          DATABASE_URL: file:./steady.db
+
+  e2e:
+    name: API, auth and UI
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    env:
+      DATABASE_URL: file:./steady.db
+      AUTH_SECRET: ci-only-secret-regenerated-every-run
+      STEADY_DEMO: '1'
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build:steady
+
+      - name: Create and seed the database
+        working-directory: apps/steady-web
+        run: |
+          npx prisma db push --skip-generate
+          npm run db:seed
+
+      - name: Install a browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Start the server
+        working-directory: apps/steady-web
+        run: |
+          npx next start -p 3100 > /tmp/steady-server.log 2>&1 &
+          # Poll rather than sleep: a fixed wait is either too slow or, on a
+          # busy runner, too short — and a too-short wait fails as though the
+          # app were broken.
+          for _ in $(seq 1 60); do
+            if curl -sf -o /dev/null http://localhost:3100/api/care; then
+              echo "server up"; exit 0
+            fi
+            sleep 1
+          done
+          echo "server did not start"; cat /tmp/steady-server.log; exit 1
+
+      - name: API and auth checks
+        run: npm run e2e -w @steady/web
+
+      - name: UI checks
+        run: npm run screens -w @steady/web
+
+      - name: Keep the screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: steady-screenshots-${{ github.sha }}
+          path: apps/steady-web/screenshots/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Server log on failure
+        if: failure()
+        run: cat /tmp/steady-server.log || true
+
+  mobile:
+    name: Android bundle
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build:steady-core
+
+      # Bundling for Android needs no Android SDK, and it catches every
+      # resolution and syntax error the APK build would hit — twenty minutes
+      # earlier, and without a Gradle run.
+      - name: Bundle the Android JS
+        working-directory: apps/steady-mobile
+        run: npx expo export --platform android --output-dir /tmp/steady-android-bundle

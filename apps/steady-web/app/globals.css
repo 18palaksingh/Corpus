@@ -1,0 +1,108 @@
+@import './tokens.css';
+
+/*
+ * Steady, on the web.
+ *
+ * Mobile-first, unlike its sibling in apps/web — the deck's prototypes are all
+ * phone screens, and the person using this is as likely to be on a phone
+ * between meetings as at a desk. The layout widens into a sidebar at 900px
+ * rather than collapsing into one.
+ *
+ * The type rule is the same on both platforms: if it is a number or an
+ * all-caps metadata label, it is mono.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-page-background);
+  color: var(--color-ink);
+  font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: var(--text-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+h1 {
+  font-size: var(--text-heading);
+}
+h2 {
+  font-size: var(--text-title);
+}
+h3 {
+  font-size: var(--text-body-large);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Numbers and all-caps metadata are mono, everywhere, on both platforms. */
+.mono,
+.metaLabel {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.metaLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--text-label);
+  color: var(--color-muted);
+}
+
+/*
+ * Focus is never removed, only restyled. This is an app people use when they
+ * are depleted, and depleted people use keyboards.
+ */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/*
+ * The reset animates a breathing ring. Anyone who has asked their system not
+ * to animate things gets the timer without the motion — and the reset still
+ * works, because the text and the count carry it.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

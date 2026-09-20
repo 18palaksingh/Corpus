@@ -1,0 +1,150 @@
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: var(--space-xl);
+  background: var(--color-ink);
+}
+
+.panel {
+  width: 100%;
+  max-width: 440px;
+  padding: var(--space-xxl);
+  border-radius: var(--radius-xl);
+  background: var(--color-card-background);
+}
+
+.header {
+  margin-bottom: var(--space-xxl);
+}
+
+.brand {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-primary);
+}
+
+.headline {
+  margin-top: var(--space-lg);
+  font-size: var(--text-heading);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.sub {
+  margin-top: var(--space-md);
+  color: var(--color-muted);
+  line-height: 1.55;
+}
+
+.primary,
+.secondary {
+  width: 100%;
+  padding: 14px var(--space-xl);
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+  font-size: var(--text-body-large);
+}
+
+.primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.secondary {
+  margin-bottom: var(--space-sm);
+  background: var(--color-white);
+  color: var(--color-ink);
+  border-color: var(--color-border-strong);
+}
+
+.secondary:hover {
+  background: var(--color-subtle-fill);
+}
+
+.reassure {
+  margin-top: var(--space-md);
+  text-align: center;
+  font-size: var(--text-caption);
+  color: var(--color-muted);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin: var(--space-xl) 0 var(--space-lg);
+  color: var(--color-muted-light);
+  font-size: var(--text-caption);
+  text-align: center;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.caption {
+  margin-top: var(--space-md);
+  font-size: var(--text-caption);
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+.caption code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.92em;
+}
+
+.error {
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  background: var(--signal-red-bg);
+  color: var(--signal-red-fg);
+  font-size: var(--text-caption);
+}
+
+.footer {
+  margin-top: var(--space-xxl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.crisis {
+  margin-top: var(--space-sm);
+  font-size: var(--text-caption);
+  color: var(--color-muted);
+}
+
+/* Dev-only affordance, styled to look like the tooling it is rather than a
+   product feature someone might mistake for a real way in. */
+.demo {
+  width: 100%;
+  margin-top: var(--space-xl);
+  padding: 10px var(--space-lg);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-muted);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--text-label);
+  cursor: pointer;
+}
+
+.demo:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}

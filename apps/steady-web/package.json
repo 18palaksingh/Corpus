@@ -1,0 +1,37 @@
+{
+  "name": "@steady/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "generate:tokens": "node scripts/generate-tokens.mjs",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push --skip-generate",
+    "db:seed": "node prisma/seed.mjs",
+    "db:reset": "prisma db push --force-reset --skip-generate && npm run db:seed",
+    "predev": "npm run generate:tokens && npm run db:generate && npm run db:push",
+    "dev": "next dev -p 3100",
+    "prebuild": "npm run generate:tokens && npm run db:generate",
+    "build": "next build",
+    "start": "next start -p 3100",
+    "typecheck": "npm run db:generate && tsc --noEmit",
+    "e2e": "node e2e/flows.mjs",
+    "screens": "node e2e/screens.mjs"
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "^2.7.4",
+    "@prisma/client": "^6.2.1",
+    "@steady/core": "*",
+    "next": "^15.1.6",
+    "next-auth": "^5.0.0-beta.25",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/react": "~19.1.0",
+    "@types/react-dom": "~19.1.0",
+    "prisma": "^6.2.1",
+    "typescript": "^5.6.3"
+  }
+}

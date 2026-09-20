@@ -1,0 +1,149 @@
+name: Steady Android APK
+
+# Builds an installable Android APK and attaches it to the run as an artifact.
+#
+# ## Why this runs in CI rather than on a laptop
+#
+# Building an APK needs the Android SDK, the Android Gradle Plugin (published
+# only to Google's Maven repository) and a JDK. GitHub's `ubuntu-latest`
+# runners ship the SDK preinstalled, so this workflow needs no setup beyond a
+# JDK and Node. It is also the only path that works from environments whose
+# egress policy blocks `dl.google.com`.
+#
+# ## Signing
+#
+# The APK is signed with the debug keystore that `expo prebuild` generates.
+# That is deliberate for a test build: it needs no secrets, it installs on any
+# device with "install unknown apps" enabled, and it cannot be confused with
+# something ready for the Play Store.
+#
+# **It is not a distributable build.** Before releasing, generate a real
+# upload keystore, add it as a repository secret, and switch the `release`
+# signing config in `android/app/build.gradle` — see apps/steady-mobile/README.md.
+
+on:
+  workflow_dispatch:
+    inputs:
+      api_base_url:
+        description: >-
+          The Steady server this APK talks to. Must be reachable from the phone —
+          "localhost" is the phone itself, not your laptop. Use an https:// origin,
+          or http://<your-LAN-ip>:3100 for a local dev server.
+        required: true
+        default: 'http://10.0.2.2:3100'
+  push:
+    branches: ['claude/**']
+    paths:
+      - 'apps/steady-mobile/**'
+      - 'packages/steady-core/**'
+      - '.github/workflows/steady-android.yml'
+
+# One build per branch; a newer push makes an in-flight build pointless.
+concurrency:
+  group: steady-android-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    env:
+      # A push build has no input, so fall back to the emulator's alias for the
+      # host machine — the one address that is useful without knowing anything
+      # about the network the APK will end up on.
+      STEADY_API_BASE_URL: ${{ inputs.api_base_url || 'http://10.0.2.2:3100' }}
+      EXPO_NO_TELEMETRY: '1'
+      CHECKPOINT_DISABLE: '1'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Use JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # The Android app imports @steady/core from its built output, so the
+      # model has to be compiled before Metro can resolve it.
+      - name: Build the model package
+        run: npm run build -w @steady/core
+
+      - name: Check the model
+        run: npm run test -w @steady/core
+
+      - name: Typecheck the app
+        run: npm run typecheck -w @steady/mobile
+
+      - name: Generate the native project
+        working-directory: apps/steady-mobile
+        run: npx expo prebuild --platform android --clean --no-install
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('apps/steady-mobile/android/**/*.gradle*') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - name: Build the APK
+        working-directory: apps/steady-mobile/android
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleRelease --no-daemon --stacktrace
+
+      - name: Name the artifact after what it points at
+        id: name
+        run: |
+          # The server the APK talks to is the single most important fact about
+          # a test build, so it goes in the filename rather than in a comment
+          # nobody reads next to the download button.
+          slug=$(printf '%s' "$STEADY_API_BASE_URL" \
+            | sed -E 's#^https?://##; s#[^A-Za-z0-9._-]#-#g' \
+            | cut -c1-40)
+          echo "slug=$slug" >> "$GITHUB_OUTPUT"
+
+      - name: Upload the APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: steady-${{ steps.name.outputs.slug }}-${{ github.sha }}
+          path: apps/steady-mobile/android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Summary
+        run: |
+          {
+            echo "### Steady APK"
+            echo
+            echo "Download it from the **Artifacts** section of this run."
+            echo
+            echo "| | |"
+            echo "|---|---|"
+            echo "| Server | \`$STEADY_API_BASE_URL\` |"
+            echo "| Package | \`com.steady.app\` |"
+            echo "| Signing | debug keystore — testing only, not for the Play Store |"
+            echo
+            echo "Install with \`adb install -r steady*.apk\`, or copy it to the phone"
+            echo "and open it with \"install unknown apps\" enabled."
+            echo
+            if [ "${STEADY_API_BASE_URL#http://}" != "$STEADY_API_BASE_URL" ]; then
+              echo "> Cleartext HTTP is enabled in this build because the server URL is \`http://\`."
+              echo "> The phone must be able to reach that address — check it in the phone's browser first."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

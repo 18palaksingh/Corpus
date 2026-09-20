@@ -1,0 +1,89 @@
+.card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  background: var(--color-card-background);
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.band {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 6px var(--space-md);
+  border-radius: var(--radius-pill);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--text-label);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.evidence {
+  margin-top: var(--space-md);
+  font-size: var(--text-body-large);
+  line-height: 1.4;
+}
+
+/*
+ * The seven-day strip.
+ *
+ * Bars, not a line chart: a line has to interpolate across a missed day, and a
+ * missed day is information — often the most telling information in the week.
+ * A gap renders as a hollow slot.
+ */
+.series {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 56px;
+  margin-top: var(--space-xl);
+}
+
+.slot {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.bar {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary);
+  opacity: 0.85;
+}
+
+.gap {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--color-border-strong);
+}
+
+.axis {
+  display: flex;
+  gap: 6px;
+  margin-top: var(--space-sm);
+}
+
+.axisLabel {
+  flex: 1;
+  text-align: center;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--text-label);
+  color: var(--color-muted-light);
+}
