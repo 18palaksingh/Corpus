@@ -104,6 +104,9 @@ jobs:
       - name: API and auth checks
         run: npm run e2e -w @steady/web
 
+      - name: Pairing merge
+        run: npm run e2e:pairing -w @steady/web
+
       - name: UI checks
         run: npm run screens -w @steady/web
 
@@ -119,6 +122,78 @@ jobs:
       - name: Server log on failure
         if: failure()
         run: cat /tmp/steady-server.log || true
+
+  postgres:
+    name: API and auth on Postgres
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    # SQLite is the development default, Postgres is what gets deployed, and
+    # the two are only interchangeable for as long as the schema stays
+    # portable. This job is what keeps that true: it runs the same suite
+    # against a real Postgres, so a schema change that quietly only works on
+    # SQLite fails here rather than on a deploy.
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: steady
+          POSTGRES_PASSWORD: steady
+          POSTGRES_DB: steady
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://steady:steady@localhost:5432/steady
+      AUTH_SECRET: ci-only-secret-regenerated-every-run
+      STEADY_DEMO: '1'
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      # The build derives the Prisma provider from DATABASE_URL, so this also
+      # asserts that derivation works — a build that generated a SQLite client
+      # here would fail on the first query below.
+      - name: Build
+        run: npm run build:steady
+
+      - name: Create and seed the database
+        working-directory: apps/steady-web
+        run: |
+          npx prisma db push --skip-generate
+          npm run db:seed
+
+      - name: Start the server
+        working-directory: apps/steady-web
+        run: |
+          npx next start -p 3100 > /tmp/steady-pg.log 2>&1 &
+          for _ in $(seq 1 60); do
+            if curl -sf -o /dev/null http://localhost:3100/api/care; then
+              echo "server up"; exit 0
+            fi
+            sleep 1
+          done
+          echo "server did not start"; cat /tmp/steady-pg.log; exit 1
+
+      - name: API and auth checks
+        run: npm run e2e -w @steady/web
+
+      - name: Pairing merge
+        run: npm run e2e:pairing -w @steady/web
+
+      - name: Server log on failure
+        if: failure()
+        run: cat /tmp/steady-pg.log || true
 
   mobile:
     name: Android bundle

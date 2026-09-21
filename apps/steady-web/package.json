@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "generate:tokens": "node scripts/generate-tokens.mjs",
-    "db:generate": "prisma generate",
+    "db:generate": "npm run db:provider && prisma generate",
     "db:push": "prisma db push --skip-generate",
     "db:seed": "node prisma/seed.mjs",
     "db:reset": "prisma db push --force-reset --skip-generate && npm run db:seed",
@@ -15,7 +15,9 @@
     "start": "next start -p 3100",
     "typecheck": "npm run db:generate && tsc --noEmit",
     "e2e": "node e2e/flows.mjs",
-    "screens": "node e2e/screens.mjs"
+    "screens": "node e2e/screens.mjs",
+    "db:provider": "node scripts/db-provider.mjs",
+    "e2e:pairing": "node e2e/pairing.mjs"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",

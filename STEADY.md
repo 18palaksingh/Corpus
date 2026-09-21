@@ -65,14 +65,18 @@ back door if it ever ships by accident.
 ## Checks
 
 ```bash
-npm run test:steady    # 45 model tests
+npm run test:steady    # 47 model tests
 npm run typecheck      # every workspace
 
 # Against a running server
 npm run build:steady && npm start -w @steady/web
-npm run e2e:steady                  # 38 API and auth checks
-npm run screens -w @steady/web      # 40 UI checks, writes screenshots/
+npm run e2e:steady                    # 38 API, auth and isolation checks
+npm run e2e:pairing -w @steady/web    # 15 checks on the account merge
+npm run screens -w @steady/web        # 40 UI checks, writes screenshots/
 ```
+
+All of it runs against whichever database `DATABASE_URL` points at, so the
+same commands verify a SQLite dev box and a Postgres deployment.
 
 The mobile app has its own browser-driven check — see
 `apps/steady-mobile/README.md`.
@@ -115,16 +119,28 @@ rather than locking someone out.
 ## The database
 
 Prisma. **SQLite by default**, so a fresh clone runs with nothing to install.
-**Postgres for anything deployed:**
+**Postgres for anything deployed — and the switch is automatic:**
 
 ```bash
-node apps/steady-web/scripts/use-postgres.mjs
-DATABASE_URL="postgresql://…" npm run db:push -w @steady/web
+DATABASE_URL="postgresql://…" npm run build:steady
+npm run db:push -w @steady/web        # once, against the new database
 ```
 
-The schema is written to make that a one-line change: no Prisma enums (SQLite
-has none), no database-specific native types, and every "enum" is a `String`
-whose allowed values live in the TypeScript union it maps to.
+Prisma cannot take its `provider` from an environment variable, so the line in
+`schema.prisma` has to change. Leaving that as a manual step is a trap with a
+long fuse — deploy with a Postgres URL, forget the step, and `prisma generate`
+quietly emits a *SQLite* client: the build goes green, the container starts,
+and the first query fails in production with an error that does not mention
+the real cause. So `scripts/db-provider.mjs` derives the provider from
+`DATABASE_URL` on every build, and the deploy cannot drift from the database
+it is pointed at. Force it either way with `npm run db:provider -w @steady/web
+-- postgresql`.
+
+That works because the schema is portable by construction: no Prisma enums
+(SQLite has none), no database-specific native types, and every "enum" is a
+`String` whose allowed values live in the TypeScript union it maps to. CI runs
+the API and auth suite against a real Postgres as well as SQLite, so a change
+that quietly only works on one of them fails there rather than on a deploy.
 
 Two privacy decisions are visible in the schema itself, because a promise kept
 only in a policy document is not kept:
@@ -144,14 +160,16 @@ which the deck commits to, erasure is a right rather than a courtesy.
 Any Node host. Vercel, Fly, Railway and a plain container all work.
 
 ```bash
-DATABASE_URL="postgresql://…"      # after the Postgres switch above
+DATABASE_URL="postgresql://…"      # the build follows this; nothing else to set
 AUTH_SECRET="…"                    # openssl rand -base64 32
 AUTH_URL="https://steady.example.com"
 STEADY_ALLOWED_ORIGINS="…"         # only if a browser client is on another origin
 ```
 
 `npm run build:steady` then `npm start -w @steady/web`. Run
-`npm run db:push -w @steady/web` once against the production database.
+`npm run db:push -w @steady/web` once against the production database. The
+build picks up the Postgres provider from `DATABASE_URL` on its own — there is
+no separate switch step to forget.
 
 Do **not** set `STEADY_DEMO` in production.
 
