@@ -1,0 +1,22 @@
+.shell {
+  min-height: 100vh;
+  /* Room for the fixed bottom tab bar. */
+  padding-bottom: 96px;
+}
+
+.main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg) var(--space-xxl);
+}
+
+@media (min-width: 900px) {
+  .shell {
+    padding-bottom: 0;
+    padding-left: 232px;
+  }
+
+  .main {
+    padding: var(--space-xxxl) var(--space-xxl);
+  }
+}

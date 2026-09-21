@@ -1,0 +1,236 @@
+// Steady's database.
+//
+// ## Provider
+//
+// SQLite by default, so `npm run dev:steady-web` works on a fresh clone with
+// no services to start. Postgres for anything deployed — run
+// `node scripts/use-postgres.mjs` and point `DATABASE_URL` at your database.
+//
+// The schema is written to be portable between the two: no Prisma enums
+// (SQLite has none), no database-specific native types, and every "enum" is a
+// String whose allowed values live in the TypeScript union it maps to. That is
+// the whole cost of the one-line switch.
+//
+// ## Privacy
+//
+// The deck's wedge is a promise: individual data never reaches the employer,
+// and check-ins are the person's own. Two consequences are visible here:
+//
+//   - There is no `organisationId` on `CheckIn`. The B2B dashboard is out of
+//     MVP scope, and when it arrives it reads aggregates over groups of ten or
+//     more — it must never be able to join a check-in to a person. Keeping the
+//     column absent makes the wrong query hard to write by accident.
+//   - `CrisisRouting` records that a routing happened and where, never what
+//     was typed. The audit answers "did we route correctly", which does not
+//     require keeping the sentence someone wrote on their worst day.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Accounts
+// ---------------------------------------------------------------------------
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+
+  /// True until the person attaches a real sign-in method. An anonymous
+  /// account is a full account — it just has no identifying columns filled in.
+  anonymous Boolean @default(true)
+
+  /// IANA zone, captured so "today" means today where they are.
+  timezone String @default("Asia/Kolkata")
+
+  createdAt DateTime @default(now())
+
+  accounts     Account[]
+  sessions     Session[]
+  checkIns     CheckIn[]
+  wins         Win[]
+  unfreezes    UnfreezeSession[]
+  resets       ResetSession[]
+  crisisEvents CrisisRouting[]
+  devices      Device[]
+  pairingCodes PairingCode[]
+}
+
+/// Auth.js: one row per linked OAuth identity.
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+/// Auth.js: kept for adapter compatibility. Sessions themselves are JWTs.
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+/// Auth.js: email sign-in tokens.
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ---------------------------------------------------------------------------
+// Mobile
+// ---------------------------------------------------------------------------
+
+/// An Android or iOS install, holding its own bearer token.
+///
+/// The token is stored hashed. A stolen database backup should not hand over
+/// working credentials to every install, and nothing in the product ever needs
+/// to read a token back — only compare one.
+model Device {
+  id        String   @id @default(cuid())
+  userId    String
+  tokenHash String   @unique
+  label     String
+  createdAt DateTime @default(now())
+  lastSeen  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// A short-lived code that moves a phone onto a web account.
+///
+/// Six digits is deliberately weak on its own, which is why the code expires
+/// in ten minutes, is single-use, and is rate-limited on the redeem endpoint.
+model PairingCode {
+  code       String    @id
+  userId     String
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// ---------------------------------------------------------------------------
+// The product
+// ---------------------------------------------------------------------------
+
+/// One pulse check-in. At most one per person per local day.
+model CheckIn {
+  id     String @id @default(cuid())
+  userId String
+
+  /// Local calendar day, `YYYY-MM-DD`. A string, not a DateTime: the day is
+  /// the fact being recorded, and storing an instant invites a timezone to
+  /// quietly move someone's Monday into Sunday.
+  date String
+
+  energy        Int
+  detachment    Int
+  effectiveness Int
+  sleepHours    Float
+  bodyPain      Boolean
+  workedLate    Boolean
+
+  recordedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId, date])
+}
+
+/// Something that went well, in the person's own words.
+model Win {
+  id        String   @id @default(cuid())
+  userId    String
+  date      String
+  text      String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, date])
+}
+
+/// One run of the Task Unfreezer.
+///
+/// `helped` is the deck's "helped me start my task" metric, so it is a real
+/// column rather than an analytics event — the pilot target is 70%+ yes and
+/// that number has to come from somewhere.
+model UnfreezeSession {
+  id        String   @id @default(cuid())
+  userId    String
+  task      String
+  shape     String
+  steps     String
+  createdAt DateTime @default(now())
+  helped    Boolean?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+/// One run of the blank-mind reset. `completed` is false if they skipped out,
+/// which is a legitimate outcome and not a failure.
+model ResetSession {
+  id          String   @id @default(cuid())
+  userId      String
+  completed   Boolean  @default(false)
+  secondsHeld Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+/// An audit row for the crisis guardrail — see the privacy note at the top.
+model CrisisRouting {
+  id     String  @id @default(cuid())
+  userId String?
+
+  /// Which surface screened the text: `unfreeze`, `win`, `reflection`.
+  surface String
+
+  /// Whether the crisis surface was actually shown. Always true today; the
+  /// column exists so a future soft-routing experiment stays auditable.
+  routed Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+}

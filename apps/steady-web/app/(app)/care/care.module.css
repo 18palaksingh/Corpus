@@ -1,0 +1,60 @@
+/* The crisis block. Calm, not alarming — but unmissable and always first. */
+.crisis {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  background: var(--color-ink);
+  color: var(--color-white);
+}
+
+.crisisLabel {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-primary-on-dark);
+}
+
+.crisisCall {
+  font-size: var(--text-title);
+  font-weight: 600;
+  color: var(--color-white);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.crisisCall:hover {
+  text-decoration: underline;
+}
+
+.crisisDetail {
+  font-size: var(--text-caption);
+  color: #9AA8A2;
+}
+
+.partners {
+  list-style: none;
+  margin: var(--space-lg) 0 0;
+  padding: 0;
+}
+
+.partner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding: var(--space-lg) 0;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.partner:last-child {
+  border-bottom: none;
+}
+
+.price {
+  flex-shrink: 0;
+  font-size: var(--text-body-large);
+  color: var(--color-primary-deep);
+}
